@@ -1,0 +1,29 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    a {
+        @apply hover:text-orange-600;
+    }
+    a[data-file="file"]::before {
+        content: '';
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-image: url(assets/download.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+        margin-right: 8px;
+        fill: #ea580c;
+    }
+
+
+
+
+    h2 {
+        @apply text-xl;
+    }
+}
