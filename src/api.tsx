@@ -38,7 +38,7 @@ api.interceptors.response.use(
         localStorage.removeItem("refresh_token");
 
         if (window.location.pathname !== "/auth") {
-          window.location.href = "/auth";
+          // window.location.href = "/auth";
         }
       }
     }
