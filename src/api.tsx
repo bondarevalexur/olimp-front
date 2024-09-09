@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
+  baseURL: "https://8b3420317d20.vps.myjino.ru/api/",
 });
 
 api.interceptors.request.use(
@@ -38,7 +38,7 @@ api.interceptors.response.use(
         localStorage.removeItem("refresh_token");
 
         if (window.location.pathname !== "/auth") {
-          // window.location.href = "/auth";
+          window.location.href = "/auth";
         }
       }
     }
