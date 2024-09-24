@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const hostname = window.location.hostname;
+const protocol = window.location.protocol;
+const port = hostname === "localhost" ? ":8000" : "";
+
 export const api = axios.create({
-  baseURL: "https://8b3420317d20.vps.myjino.ru/api/",
+  baseURL: `${protocol}//${hostname}${port}/api/`,
 });
 
 api.interceptors.request.use(
