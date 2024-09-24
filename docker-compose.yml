@@ -7,10 +7,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     networks:
-      - mynetwork
+      - back-olimp_mynetwork
     ports:
       - "80:80"
 
 networks:
-  mynetwork:
+  back-olimp_mynetwork:
     external: true  # Указываем, что сеть уже создана
