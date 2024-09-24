@@ -10,3 +10,7 @@ services:
       - mynetwork
     ports:
       - "80:80"
+
+networks:
+  my_custom_network:
+    external: true  # Указываем, что сеть уже создана
