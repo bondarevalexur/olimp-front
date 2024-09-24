@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  web:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:80"
