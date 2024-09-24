@@ -12,5 +12,5 @@ services:
       - "80:80"
 
 networks:
-  my_custom_network:
+  mynetwork:
     external: true  # Указываем, что сеть уже создана
