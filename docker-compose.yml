@@ -6,5 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    networks:
+      - mynetwork
     ports:
       - "80:80"
