@@ -41,8 +41,8 @@ api.interceptors.response.use(
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
 
-        if (window.location.pathname !== "/auth") {
-          window.location.href = "/auth";
+        if (window.location.pathname !== "/sign-in") {
+          window.location.href = "/sign-in";
         }
       }
     }

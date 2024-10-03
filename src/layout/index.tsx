@@ -20,7 +20,7 @@ function Layout() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    navigate("/auth");
+    navigate("/sign-in");
   };
   const accessToken = localStorage.getItem("access_token");
 
@@ -65,17 +65,17 @@ function Layout() {
             {Object.values(ROUTS_PATH).map(({ path, title }, index) => (
               <li
                 key={`${index}_${path}`}
-                className="list-none p-0 cursor-pointer relative [&:hover_img]:-top-10 [&:hover_a]:bg-white [&:hover_img]:opacity-100 [&:hover_img]:-rotate-45 border-x-2 border-x-gray-200 border-x-solid hover:shadow hover:border-x-orange-400 hover:text-orange-400"
+                className="list-none p-0 cursor-pointer relative"
               >
                 <Link
-                  className="z-10 relative no-underline text-inherit px-2 m-0"
+                  className="z-10 relative block rounded no-underline text-inherit px-2 m-0 peer hover:bg-white hover:shadow hover:border-x-orange-400 hover:text-orange-400"
                   to={path}
                 >
                   {title}
                 </Link>
 
                 <img
-                  className="absolute opacity-0 -left-4 top-0 transition-all m-0"
+                  className="absolute opacity-0 -left-4 top-0 transition-all m-0 -z-100 peer-hover:opacity-100 peer-hover:-top-10 peer-hover:-rotate-45"
                   src={img1}
                   alt="M"
                   width="50"

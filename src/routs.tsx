@@ -1,7 +1,10 @@
 import Layout from "./layout";
 import NotFound from "./pages/NotFound";
 import MainPage from "./pages/Main";
-import AuthPage from "./pages/Auth";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import AccountActivation from "./pages/AccountActivation";
+import ResetPassword from "./pages/ResetPassword";
 import ConcourseRegistration from "./pages/ConcourseRegistration";
 import { api } from "./api.tsx";
 
@@ -55,7 +58,10 @@ export const ROUTS = [
         path: "reg",
         element: <ConcourseRegistration />,
       },
-      { path: "auth", element: <AuthPage /> },
+      { path: "sign-in", element: <SignIn /> },
+      { path: "sign-up", element: <SignUp /> },
+      { path: "profile-activate", element: <AccountActivation /> },
+      { path: "reset-password", element: <ResetPassword /> },
     ],
   },
 ];
