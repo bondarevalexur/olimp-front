@@ -1,6 +1,0 @@
-#!/bin/bash
-commitRegex='^(PONY-[0-9]+|merge|hotfix)'
-if ! grep -qE "$commitRegex" "$1"; then
-    echo "Aborting according commit message policy. Please specify JIRA issue PONY-XXXX."
-    exit 1
-fi
