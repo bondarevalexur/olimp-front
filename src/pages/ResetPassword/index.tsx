@@ -1,7 +1,7 @@
-import { api } from "../../api.tsx";
+import { api } from "services/api.tsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
+import Button from "components/Button";
 
 function ResetPassword() {
   const [email, setEmail] = useState("");

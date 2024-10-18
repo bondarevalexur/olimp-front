@@ -5,8 +5,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import AccountActivation from "./pages/AccountActivation";
 import ResetPassword from "./pages/ResetPassword";
-import ConcourseRegistration from "./pages/ConcourseRegistration";
-import { api } from "./api.tsx";
+import ConcourseRegistration from "./pages/ConcourseRegistration/index.jsx";
+import { api } from "./services/api.tsx";
 
 export const ROUTS_PATH = {
   main: { path: "/", title: "Главная", remoteId: 1 },
@@ -27,7 +27,7 @@ export const ROUTS = [
       const accessToken = localStorage.getItem("access_token");
 
       if (accessToken) {
-        const user = await api.get("/profile");
+        const user = await api.get("/users/show/");
         return user.data;
       }
 

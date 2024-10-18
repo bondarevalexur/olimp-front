@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 import { ROUTS_PATH } from "../routs.tsx";
 // import logo from "../assets/golden-ratio.jpg";
-import logo from "../assets/logo-zayaz.jpg";
-import img1 from "../assets/img.png";
+import logo from "assets/logo-zayaz.jpg";
+import img1 from "assets/img.png";
 import clsx from "clsx";
-import Button from "../components/Button";
+import Button from "components/Button";
+import { ToastContainer } from "react-toastify";
 
 function Layout() {
   const user = useLoaderData() as any;
@@ -135,6 +136,8 @@ function Layout() {
         {/*    ))}*/}
         {/*</ul>*/}
       </footer>
+
+      <ToastContainer />
     </>
   );
 }

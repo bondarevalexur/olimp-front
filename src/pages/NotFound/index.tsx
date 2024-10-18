@@ -1,6 +1,6 @@
 import { useRouteError } from "react-router-dom";
 import { useState } from "react";
-import Button from "../../components/Button";
+import Button from "components/Button";
 
 function NotFoundPage() {
   let error: any = useRouteError();

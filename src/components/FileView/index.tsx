@@ -1,6 +1,6 @@
-import Button from "../Button";
+import Button from "components/Button";
 import { toast } from "react-toastify";
-import { api } from "../../api.tsx";
+import { api } from "services/api.tsx";
 
 function FileUploadInput({ file, getPage }: any) {
   return (

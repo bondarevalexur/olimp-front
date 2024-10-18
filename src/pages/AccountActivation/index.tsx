@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { api } from "../../api.tsx";
-import Button from "../../components/Button";
+import { api } from "services/api.tsx";
+import Button from "components/Button";
 
 const AccountActivation = () => {
   const token = location.search?.replace("?", "");
@@ -12,7 +12,9 @@ const AccountActivation = () => {
   const activateAccount = useCallback(
     async (token: string) => {
       try {
-        const response = await api.get(`activate?activation_code=${token}`);
+        const response = await api.get(
+          `users/activate?activation_code=${token}`,
+        );
 
         const data = await response;
 

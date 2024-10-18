@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useRouteLoaderData } from "react-router-dom";
-import Button from "../../components/Button";
+import Button from "components/Button";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import FileUploadInput from "../../components/FileUploadInput";
-import FileView from "../../components/FileView";
-import { api } from "../../api.tsx";
+import FileUploadInput from "components/FileUploadInput";
+// import FileView from "components/FileView";
+import { api } from "services/api.tsx";
+import FileView from "components/FileView";
 
 function Files({ getPage, remoteId }: any) {
   async function handleSubmit(selectedFile: File) {
