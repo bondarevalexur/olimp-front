@@ -4,7 +4,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api.tsx";
 
 export const jsonServerApi = createApi({
-  reducerPath: "jsonServerApi",
+  reducerPath: "jsonServerApqwei",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" }),
   endpoints: (builder) => ({
     getAlbums: builder.query({
