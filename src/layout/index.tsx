@@ -12,6 +12,7 @@ import img1 from "assets/img.png";
 import clsx from "clsx";
 import Button from "components/Button";
 import { ToastContainer } from "react-toastify";
+import { useGetUserQuery, userApi } from "../services/store.ts";
 
 function Layout() {
   const user = useLoaderData() as any;
@@ -21,9 +22,11 @@ function Layout() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    userApi.util.resetApiState();
     navigate("/sign-in");
   };
   const accessToken = localStorage.getItem("access_token");
+  const { data: currentUser } = useGetUserQuery({});
 
   return (
     <>
@@ -63,27 +66,31 @@ function Layout() {
 
         <nav className="container m-auto">
           <ul className="flex justify-between container">
-            {Object.values(ROUTS_PATH).map(({ path, title }, index) => (
-              <li
-                key={`${index}_${path}`}
-                className="list-none p-0 cursor-pointer relative"
-              >
-                <Link
-                  className="z-10 relative block rounded no-underline text-inherit px-2 m-0 peer hover:bg-white hover:shadow hover:border-x-orange-400 hover:text-orange-400"
-                  to={path}
+            {Object.values(ROUTS_PATH)
+              .filter(
+                (rout: any) => !rout?.isAdmin || currentUser?.data?.isAdmin,
+              )
+              .map(({ path, title }, index) => (
+                <li
+                  key={`${index}_${path}`}
+                  className="list-none p-0 cursor-pointer relative"
                 >
-                  {title}
-                </Link>
+                  <Link
+                    className="z-10 relative block rounded no-underline text-inherit px-2 m-0 peer hover:bg-white hover:shadow hover:border-x-orange-400 hover:text-orange-400"
+                    to={path}
+                  >
+                    {title}
+                  </Link>
 
-                <img
-                  className="absolute opacity-0 -left-4 top-0 transition-all m-0 -z-100 peer-hover:opacity-100 peer-hover:-top-10 peer-hover:-rotate-45"
-                  src={img1}
-                  alt="M"
-                  width="50"
-                  height="50"
-                />
-              </li>
-            ))}
+                  <img
+                    className="absolute opacity-0 -left-4 top-0 transition-all m-0 -z-100 peer-hover:opacity-100 peer-hover:-top-10 peer-hover:-rotate-45"
+                    src={img1}
+                    alt="M"
+                    width="50"
+                    height="50"
+                  />
+                </li>
+              ))}
           </ul>
         </nav>
       </header>
@@ -97,44 +104,20 @@ function Layout() {
           <li>Воронеж</li>
           <li className="hover:text-orange-400">
             Тел.:
-            <a href="tel:+79992326501">+7 (999) 232-65-01</a>
+            <a href="tel:+79202210274">+7 (920) 221-02-74</a>
           </li>
 
           <li className="hover:text-orange-400">
-            E-mail: <a href="mailto:org@ipokengu.ru">org@ipokengu.ru</a>
+            E-mail:{" "}
+            <a href="mailto:admin@math-championship.ru">org@ipokengu.ru</a>
           </li>
 
           <li className="hover:text-orange-400">
-            <a href="https://vk.com/ipokenguru" target="_blank">
+            <a href="https://vk.com" target="_blank">
               Группа ВКонтакте
             </a>
           </li>
         </ul>
-        {/*<ul className="justify-self-center">*/}
-        {/*  {Object.values(ROUTS_PATH)*/}
-        {/*    .slice(0, Math.round(Object.values(ROUTS_PATH).length / 2))*/}
-        {/*    .map(({ path, title }, index) => (*/}
-        {/*      <li*/}
-        {/*        key={`${index}_${path}`}*/}
-        {/*        className="cursor-pointer hover:text-orange-400"*/}
-        {/*      >*/}
-        {/*        <Link to={path}>{title}</Link>*/}
-        {/*      </li>*/}
-        {/*    ))}*/}
-        {/*</ul>*/}
-
-        {/*<ul className="justify-self-center">*/}
-        {/*  {Object.values(ROUTS_PATH)*/}
-        {/*    .slice(Math.round(Object.values(ROUTS_PATH).length / 2))*/}
-        {/*    .map(({ path, title }, index) => (*/}
-        {/*      <li*/}
-        {/*        key={`${index}_${path}`}*/}
-        {/*        className="cursor-pointer hover:text-orange-400"*/}
-        {/*      >*/}
-        {/*        <Link to={path}>{title}</Link>*/}
-        {/*      </li>*/}
-        {/*    ))}*/}
-        {/*</ul>*/}
       </footer>
 
       <ToastContainer />

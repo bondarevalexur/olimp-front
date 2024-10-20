@@ -1,30 +1,39 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api.tsx";
 
-export const jsonServerApi = createApi({
-  reducerPath: "jsonServerApqwei",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" }),
-  endpoints: (builder) => ({
-    getAlbums: builder.query({
-      query: () => `applications`,
-    }),
-  }),
-});
-
 export const applicationsApi = createApi({
-  reducerPath: "token",
+  reducerPath: "applications",
   baseQuery: api,
+  keepUnusedDataFor: 0,
   endpoints: (builder) => ({
-    getToken: builder.query({
+    getApplications: builder.query({
       queryFn: async () => {
         try {
-          const user = await api.get("applications");
-          // Return the result in an object with a `data` field
+          const user = await api.get("applications/");
           return { data: user };
         } catch (error) {
-          // Catch any errors and return them as an object with an `error` field
+          return { error };
+        }
+      },
+    }),
+    updateApplication: builder.mutation({
+      queryFn: async (data) => {
+        try {
+          const user = await api.patch("applications/", data);
+          return { data: user };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
+    createApplication: builder.mutation({
+      queryFn: async (data) => {
+        try {
+          const user = await api.post("applications/", data);
+          return { data: user };
+        } catch (error) {
           return { error };
         }
       },
@@ -32,14 +41,50 @@ export const applicationsApi = createApi({
   }),
 });
 
-export const { useGetAlbumsQuery } = jsonServerApi;
+export const {
+  useGetApplicationsQuery,
+  useUpdateApplicationMutation,
+  useCreateApplicationMutation,
+} = applicationsApi;
+
+export const userApi = createApi({
+  reducerPath: "user",
+  baseQuery: api,
+  endpoints: (builder) => ({
+    getUser: builder.query({
+      queryFn: async () => {
+        try {
+          const user = await api.get("users/show");
+          return { data: user };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
+    registerUser: builder.mutation({
+      queryFn: async () => {
+        try {
+          const user = await api.get("users/show");
+          return { data: user };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
+  }),
+});
+
+export const { useGetUserQuery } = userApi;
 
 export const store = configureStore({
   reducer: {
-    [jsonServerApi.reducerPath]: jsonServerApi.reducer,
+    [applicationsApi.reducerPath]: applicationsApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(jsonServerApi.middleware),
+    getDefaultMiddleware()
+      .concat(applicationsApi.middleware)
+      .concat(userApi.middleware),
 });
 
 setupListeners(store.dispatch);
