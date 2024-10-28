@@ -32,8 +32,7 @@ api.interceptors.response.use(
           refresh: localStorage.getItem("refresh_token"),
         });
         localStorage.setItem("access_token", response.data.access);
-        api.defaults.headers.common["Authorization"] =
-          `Bearer ${response.data.access}`;
+        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
         return api(originalRequest);
       } catch (refreshError) {
         // Handle refresh token error (e.g., logout user)

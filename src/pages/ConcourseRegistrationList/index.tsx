@@ -1,7 +1,4 @@
-import {
-  useGetApplicationsQuery,
-  useGetUserQuery,
-} from "../../services/store.ts";
+import { useGetApplicationsQuery, useGetUserQuery } from "../../services/store.ts";
 
 const columns = [
   ["N", "Номер"],
@@ -33,7 +30,7 @@ function ConcourseRegistrationList() {
           <thead>
             <tr className="bg-gray-100 text-left">
               {columns.map(([_, title], index) => (
-                <th key={index} className="py-2 px-4 border-b border-gray-200">
+                <th key={index} className="border-b border-gray-200 px-4 py-2">
                   {title}
                 </th>
               ))}
@@ -41,15 +38,9 @@ function ConcourseRegistrationList() {
           </thead>
           <tbody>
             {applications?.map((application: any, rowIndex: number) => (
-              <tr
-                key={`${application?.id}_${rowIndex}`}
-                className="hover:bg-gray-50"
-              >
+              <tr key={`${application?.id}_${rowIndex}`} className="hover:bg-gray-50">
                 {columns.map(([key, _], colIndex) => (
-                  <td
-                    key={colIndex}
-                    className="py-2 px-4 border-b border-gray-200"
-                  >
+                  <td key={colIndex} className="border-b border-gray-200 px-4 py-2">
                     {colIndex === 0 ? rowIndex + 1 : application?.[key]}
                   </td>
                 ))}

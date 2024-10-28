@@ -16,8 +16,7 @@ const Button = ({
     "inline-flex items-center justify-center font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 transition";
 
   const variantStyles: Record<string, string> = {
-    primary:
-      "bg-lime-600 text-white hover:bg-lime-400 focus:ring-lime-500 hover:text-orange-600",
+    primary: "bg-lime-600 text-white hover:bg-lime-400 focus:ring-lime-500 hover:text-orange-600",
     secondary:
       "border-lime-700 border-2 text-lime-700 hover:text-white hover:bg-lime-600 focus:ring-lime-500",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
@@ -33,15 +32,9 @@ const Button = ({
     return (
       <Link
         to={to}
-        className={clsx(
-          baseStyles,
-          variantStyles[variant],
-          sizeStyles[size],
-          className,
-          {
-            "opacity-50 cursor-not-allowed": disabled,
-          },
-        )}
+        className={clsx(baseStyles, variantStyles[variant], sizeStyles[size], className, {
+          "cursor-not-allowed opacity-50": disabled,
+        })}
       >
         {" "}
         {children}
@@ -52,15 +45,9 @@ const Button = ({
     return (
       <a
         href={href}
-        className={clsx(
-          baseStyles,
-          variantStyles[variant],
-          sizeStyles[size],
-          className,
-          {
-            "opacity-50 cursor-not-allowed": disabled,
-          },
-        )}
+        className={clsx(baseStyles, variantStyles[variant], sizeStyles[size], className, {
+          "cursor-not-allowed opacity-50": disabled,
+        })}
       >
         {children}
       </a>
@@ -71,15 +58,9 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={clsx(
-        baseStyles,
-        variantStyles[variant],
-        sizeStyles[size],
-        className,
-        {
-          "opacity-50 cursor-not-allowed": disabled,
-        },
-      )}
+      className={clsx(baseStyles, variantStyles[variant], sizeStyles[size], className, {
+        "cursor-not-allowed opacity-50": disabled,
+      })}
     >
       {children}
     </button>

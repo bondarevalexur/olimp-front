@@ -1,0 +1,27 @@
+{
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "babel-plugin-named-exports-order",
+    "prettier-plugin-tailwindcss"
+  ],
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "printWidth": 100,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "importOrder": [
+    "(?=react)((?!css).)*$|^react-hook-form$|^react-router-dom$|^lodash|^clsx$|^date-fns|^dayjs|^imask$|^react-imask|^axios$|^swiper|^twin.macro$|^react-select|^recharts|^validator|^react-tooltip|^react-tabs|^react-scripts|^react-number-format|^react-script-hook|^react-minimal-pie-chart|^react-error-boundary|^mime|^effector|^effector-react|^tiny-invariant|^@(.*)|@(.*)",
+    "(?=components/(uikit|layout|form|shared))((?!use|interface|interfaces|constants|styles|utils|type|types|store|hooks).)*$",
+    "(?=modules)((?!use|interface|interfaces|constants|styles|type|types|utils|store|hooks).)*$",
+    "<THIRD_PARTY_MODULES>",
+    "^assets/icons|fonts|^.*\\.svg|^.*\\.png",
+    "^.*\\.css$|^(.*)styles$",
+    "(?=store)((?!initStore).)*$|contexts|context",
+    "helpers|(?=hooks)((?!interface|interfaces|constants|styles|type|types|store).)*$|utils|services|plugins|(?=use[A-Z])((?!interface|interfaces|constants|styles|type|types|store).)*$|reducer|initStore|check",
+    "constants|enum|mock|masks|lib/api/urls",
+    "interface|interfaces|types|type"
+  ],
+  "importOrderSeparation": true,
+  "importOrderGroupNamespaceSpecifiers": true
+}

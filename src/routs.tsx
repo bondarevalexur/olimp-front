@@ -1,16 +1,19 @@
 import Layout from "./layout";
-import NotFound from "./pages/NotFound";
-import MainPage from "./pages/Main";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
 import AccountActivation from "./pages/AccountActivation";
-import ResetPassword from "./pages/ResetPassword";
 import ConcourseRegistration from "./pages/ConcourseRegistration/index.jsx";
 import ConcourseRegistrationList from "./pages/ConcourseRegistrationList/index.jsx";
+import MainPage from "./pages/Main";
+import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+
 import { api } from "./services/api.tsx";
 
 export const ROUTS_PATH = {
-  main: { path: "/", title: "Главная", remoteId: 1 },
+  main: { path: "/", title: "О конкурсе", remoteId: 1 },
+  codex: { path: "/codex", title: "Устав", remoteId: 6 },
+  news: { path: "/news", title: "Новости", remoteId: 7 },
   method: { path: "method", title: "Методические Материалы", remoteId: 2 },
   contacts: { path: "contacts", title: "Контакты", remoteId: 3 },
   teachers: { path: "teachers", title: "Педагогам", remoteId: 4 },
@@ -44,22 +47,28 @@ export const ROUTS = [
         index: true,
         element: <MainPage remoteId={ROUTS_PATH.main.remoteId} />,
       },
-      {
-        path: ROUTS_PATH.method.path,
-        element: <MainPage remoteId={ROUTS_PATH.method.remoteId} />,
-      },
-      {
-        path: ROUTS_PATH.contacts.path,
-        element: <MainPage remoteId={ROUTS_PATH.contacts.remoteId} />,
-      },
-      {
-        path: ROUTS_PATH.teachers.path,
-        element: <MainPage remoteId={ROUTS_PATH.teachers.remoteId} />,
-      },
-      {
-        path: ROUTS_PATH.participants.path,
-        element: <MainPage remoteId={ROUTS_PATH.participants.remoteId} />,
-      },
+      ...Object.values(ROUTS_PATH)
+        .filter(({ remoteId }: any) => Boolean(remoteId))
+        ?.map(({ remoteId, path }: any) => ({
+          path,
+          element: <MainPage remoteId={remoteId} />,
+        })),
+      // {
+      //   path: ROUTS_PATH.method.path,
+      //   element: <MainPage remoteId={ROUTS_PATH.method.remoteId} />,
+      // },
+      // {
+      //   path: ROUTS_PATH.contacts.path,
+      //   element: <MainPage remoteId={ROUTS_PATH.contacts.remoteId} />,
+      // },
+      // {
+      //   path: ROUTS_PATH.teachers.path,
+      //   element: <MainPage remoteId={ROUTS_PATH.teachers.remoteId} />,
+      // },
+      // {
+      //   path: ROUTS_PATH.participants.path,
+      //   element: <MainPage remoteId={ROUTS_PATH.participants.remoteId} />,
+      // },
       {
         path: ROUTS_PATH.reg.path,
         element: <ConcourseRegistration />,

@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +6,7 @@
     a {
         @apply hover:text-orange-600;
     }
+
     a[data-file="file"]::before {
         content: '';
         display: inline-block;
@@ -19,8 +19,6 @@
         margin-right: 8px;
         fill: #ea580c;
     }
-
-
 
 
     h2 {

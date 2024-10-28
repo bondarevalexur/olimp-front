@@ -1,13 +1,15 @@
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useRouteLoaderData } from "react-router-dom";
-import Button from "components/Button";
 
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Button from "components/Button";
 import FileUploadInput from "components/FileUploadInput";
-// import FileView from "components/FileView";
-import { api } from "services/api.tsx";
 import FileView from "components/FileView";
+
+import { useGetPageQuery, useUpdatePageMutation } from "../../services/store.ts";
+
+import { api } from "services/api.tsx";
 
 function Files({ getPage, remoteId }: any) {
   async function handleSubmit(selectedFile: File) {
@@ -41,45 +43,29 @@ function Main({ remoteId }: any) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const user = useRouteLoaderData("layout") as any;
-
-  const [page, setPage] = useState<any>();
-  const [content, setContent] = useState("");
   const [editorData, setEditorData] = useState("");
 
-  function getPage() {
-    api
-      .get(`/pages/${remoteId}`, {})
-      .then((res) => res.data)
-      .then((data) => {
-        setContent(data?.content);
-        setEditorData(data?.content);
-        setPage(data);
-      });
-  }
+  const user = useRouteLoaderData("layout") as any;
+  const { data } = useGetPageQuery({ id: remoteId });
+
+  const [updatePage] = useUpdatePageMutation();
 
   useEffect(() => {
-    getPage();
-  }, [remoteId]);
+    setEditorData(data?.data?.content ?? "");
+  }, [data?.data]);
 
   function handleSubmit() {
     const body = {
       content: editorData,
     };
 
-    api
-      .put(`/pages/${remoteId}/`, body)
-      .then((res) => res.data)
-      .then((data) => {
-        setContent(data?.content);
-        setEditorData(data?.content);
-        navigate(location.pathname);
-      });
+    updatePage({ id: remoteId, data: body });
+    navigate(location.pathname);
   }
 
   if (location?.search === "?edit" && user?.isAdmin)
     return (
-      <div className="max-w-full m-20 [&_.ck-content]:h-[500px]">
+      <div className="m-20 max-w-full [&_.ck-content]:h-[500px]">
         <h2>CKEditor</h2>
         <div className="mb-4">
           <Button className="mr-4" onClick={handleSubmit}>
@@ -89,11 +75,11 @@ function Main({ remoteId }: any) {
 
           <h3>Файлы</h3>
 
-          {page?.files?.map((file: any) => (
-            <FileView file={file} key={file.id} getPage={getPage} />
+          {data?.data?.files?.map((file: any) => (
+            <FileView file={file} key={file.id} getPage={() => {}} />
           ))}
 
-          <Files getPage={getPage} remoteId={remoteId} />
+          <Files getPage={() => {}} remoteId={remoteId} />
         </div>
 
         <CKEditor
@@ -153,12 +139,7 @@ function Main({ remoteId }: any) {
       </div>
     );
 
-  return (
-    <section
-      className="max-w-full m-20"
-      dangerouslySetInnerHTML={{ __html: content }}
-    />
-  );
+  return <section className="m-20 max-w-full" dangerouslySetInnerHTML={{ __html: editorData }} />;
 }
 
 export default Main;

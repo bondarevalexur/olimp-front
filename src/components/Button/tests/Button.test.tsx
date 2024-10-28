@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
-import Button from "../index";
-
 import { render, screen, fireEvent } from "@testing-library/react";
+
+import Button from "../index";
 
 describe("Button component", () => {
   // Тест на проверку рендеринга текста внутри кнопки

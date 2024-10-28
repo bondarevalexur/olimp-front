@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+import Button from "../../components/Button";
+
 import {
   useCreateApplicationMutation,
   useGetApplicationsQuery,
   useUpdateApplicationMutation,
 } from "../../services/store.ts";
-import Button from "../../components/Button";
-import { toast } from "react-toastify";
 
 function ConcourseRegistration() {
   const [formData, setFormData] = useState({
@@ -61,16 +63,10 @@ function ConcourseRegistration() {
   );
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="m-10 p-4 bg-white shadow rounded-lg"
-    >
-      <fieldset className="grid grid-cols-3 gap-2 mb-8">
+    <form onSubmit={handleSubmit} className="m-10 rounded-lg bg-white p-4 shadow">
+      <fieldset className="mb-8 grid grid-cols-3 gap-2">
         <div>
-          <label
-            htmlFor="school_name"
-            className="block text-gray-700 font-bold mb-2"
-          >
+          <label htmlFor="school_name" className="mb-2 block font-bold text-gray-700">
             Название школы
           </label>
           <input
@@ -79,14 +75,11 @@ function ConcourseRegistration() {
             name="school_name"
             value={formData.school_name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div>
-          <label
-            htmlFor="teacher_name"
-            className="block text-gray-700 font-bold mb-2"
-          >
+          <label htmlFor="teacher_name" className="mb-2 block font-bold text-gray-700">
             ФИО Учителя
           </label>
           <input
@@ -95,14 +88,11 @@ function ConcourseRegistration() {
             name="teacher_name"
             value={formData.teacher_name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div>
-          <label
-            htmlFor="teacher_email"
-            className="block text-gray-700 font-bold mb-2"
-          >
+          <label htmlFor="teacher_email" className="mb-2 block font-bold text-gray-700">
             Email учителя
           </label>
           <input
@@ -111,20 +101,18 @@ function ConcourseRegistration() {
             name="teacher_email"
             value={formData.teacher_email}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </fieldset>
       <fieldset>
-        <legend className="text-gray-700 font-bold m-auto mb-10">
-          ФИО Участники
-        </legend>
-        <div className="grid grid-cols-3 gap-2 mb-8">
+        <legend className="m-auto mb-10 font-bold text-gray-700">ФИО Участники</legend>
+        <div className="mb-8 grid grid-cols-3 gap-2">
           {["3.1", "3.2", "3.3"].map((section) => (
             <div key={section}>
               <label
                 htmlFor={`class_${section.replace(".", "_section_")}`}
-                className="block text-gray-700 font-bold mb-2"
+                className="mb-2 block font-bold text-gray-700"
               >
                 Секция {section}
               </label>
@@ -134,17 +122,17 @@ function ConcourseRegistration() {
                 name={`class_${section.replace(".", "_section_")}`}
                 value={formData[`class_${section.replace(".", "_section_")}`]}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-2 mb-8">
+        <div className="mb-8 grid grid-cols-2 gap-2">
           {["4.1", "4.2", "4.3", "4.4"].map((section) => (
             <div key={section}>
               <label
                 htmlFor={`class_${section.replace(".", "_section_")}`}
-                className="block text-gray-700 font-bold mb-2"
+                className="mb-2 block font-bold text-gray-700"
               >
                 Секция {section}
               </label>
@@ -154,7 +142,7 @@ function ConcourseRegistration() {
                 name={`class_${section.replace(".", "_section_")}`}
                 value={formData[`class_${section.replace(".", "_section_")}`]}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           ))}

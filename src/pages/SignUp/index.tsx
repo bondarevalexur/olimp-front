@@ -1,6 +1,8 @@
-import { api } from "services/api.tsx";
 import { useState } from "react";
+
 import Button from "components/Button";
+
+import { api } from "services/api.tsx";
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -41,13 +43,11 @@ function SignUp() {
 
   if (Boolean(success))
     return (
-      <div className="flex items-center justify-center min-h-[calc(100vh-391px)] bg-gray-100">
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl mt-0 font-bold mb-6 text-center text-gray-700">
-            Вход в систему
-          </h2>
+      <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
+        <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+          <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Вход в систему</h2>
 
-          <p className="text-red-500 text-center mb-4">{success}</p>
+          <p className="mb-4 text-center text-red-500">{success}</p>
 
           <Button to="/profile-activate" className="w-full">
             Ввести код из почты
@@ -57,20 +57,15 @@ function SignUp() {
     );
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-391px)] bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl mt-0 font-bold mb-6 text-center text-gray-700">
-          Вход в систему
-        </h2>
+    <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+        <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Вход в систему</h2>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {error && <p className="mb-4 text-center text-red-500">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
@@ -79,16 +74,13 @@ function SignUp() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="data-[error=true]:border-red-700 data-[error=true]:ring-red-500 w-full mt-1 p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+              className="mt-1 w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500 data-[error=true]:border-red-700 data-[error=true]:ring-red-500"
               placeholder="Введите email"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Пароль
             </label>
             <input
@@ -97,16 +89,13 @@ function SignUp() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="data-[error=true]:border-red-700 data-[error=true]:ring-red-500 w-full mt-1 p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+              className="mt-1 w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500 data-[error=true]:border-red-700 data-[error=true]:ring-red-500"
               placeholder="Введите пароль"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="second_password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="second_password" className="block text-sm font-medium text-gray-700">
               Подтвердите пароль
             </label>
             <input
@@ -115,13 +104,13 @@ function SignUp() {
               id="second_password"
               value={secondPassword}
               onChange={(e) => setSecondPassword(e.target.value)}
-              className="data-[error=true]:border-red-700 data-[error=true]:ring-red-500 w-full mt-1 p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+              className="mt-1 w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500 data-[error=true]:border-red-700 data-[error=true]:ring-red-500"
               placeholder="Введите пароль повторно"
             />
           </div>
 
           <div>
-            <Button type="submit" className="w-full mb-4">
+            <Button type="submit" className="mb-4 w-full">
               Регистрация
             </Button>
 

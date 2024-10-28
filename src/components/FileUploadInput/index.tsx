@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useRef } from "react";
+
 import Button from "components/Button";
 
 interface FileUploadInputProps {
@@ -6,10 +7,7 @@ interface FileUploadInputProps {
   onSubmit?: (file: File) => any;
 }
 
-const FileUploadInput: React.FC<FileUploadInputProps> = ({
-  onFileUpload,
-  onSubmit,
-}) => {
+const FileUploadInput: React.FC<FileUploadInputProps> = ({ onFileUpload, onSubmit }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // const [downloadedFile, setDownloadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -49,7 +47,7 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
           Открыть
         </Button>
         {selectedFile && (
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <p className="m-0">Выбранный файл: {selectedFile.name}</p>
             <Button type="submit" variant="primary" size="sm">
               Добавить файл на страницу

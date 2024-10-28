@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { api } from "services/api.tsx";
+
 import Button from "components/Button";
+
+import { api } from "services/api.tsx";
 
 const AccountActivation = () => {
   const token = location.search?.replace("?", "");
@@ -12,9 +14,7 @@ const AccountActivation = () => {
   const activateAccount = useCallback(
     async (token: string) => {
       try {
-        const response = await api.get(
-          `users/activate?activation_code=${token}`,
-        );
+        const response = await api.get(`users/activate?activation_code=${token}`);
 
         const data = await response;
 
@@ -36,13 +36,11 @@ const AccountActivation = () => {
   }, [token, activateAccount]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md text-center">
+    <div className="flex h-screen items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 text-center shadow-md">
         {!token && (
           <>
-            <p className="text-gray-700 mb-4">
-              Введите код активации, отправленный вам на почту.
-            </p>
+            <p className="mb-4 text-gray-700">Введите код активации, отправленный вам на почту.</p>
 
             <form
               onSubmit={(e) => {
@@ -55,7 +53,7 @@ const AccountActivation = () => {
                 type="text"
                 value={activationCode}
                 onChange={(e) => setActivationCode(e.target.value)}
-                className="w-full p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+                className="w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500"
                 placeholder="Введите код активации"
                 required
               />
@@ -66,17 +64,12 @@ const AccountActivation = () => {
           </>
         )}
 
-        {status === "loading" && (
-          <p className="text-gray-700">Активируем ваш аккаунт...</p>
-        )}
+        {status === "loading" && <p className="text-gray-700">Активируем ваш аккаунт...</p>}
         {status === "success" && (
           <>
-            <h2 className="text-2xl font-bold text-orange-400 mb-4">
-              Аккаунт активирован!
-            </h2>
-            <p className="text-gray-700 mb-6">
-              Ваш аккаунт был успешно активирован. Вы можете теперь войти в
-              систему.
+            <h2 className="mb-4 text-2xl font-bold text-orange-400">Аккаунт активирован!</h2>
+            <p className="mb-6 text-gray-700">
+              Ваш аккаунт был успешно активирован. Вы можете теперь войти в систему.
             </p>
             <Button to="/sign-in" className="w-full">
               Перейти на страницу входа
@@ -85,10 +78,8 @@ const AccountActivation = () => {
         )}
         {status === "error" && (
           <>
-            <h2 className="text-2xl font-bold text-red-600 mb-4">
-              Ошибка активации
-            </h2>
-            <p className="text-gray-700 mb-6">{errorMessage}</p>
+            <h2 className="mb-4 text-2xl font-bold text-red-600">Ошибка активации</h2>
+            <p className="mb-6 text-gray-700">{errorMessage}</p>
           </>
         )}
       </div>

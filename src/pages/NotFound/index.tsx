@@ -1,5 +1,6 @@
-import { useRouteError } from "react-router-dom";
 import { useState } from "react";
+import { useRouteError } from "react-router-dom";
+
 import Button from "components/Button";
 
 function NotFoundPage() {
@@ -15,10 +16,10 @@ function NotFoundPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="text-center">
         <h1 className="text-9xl font-extrabold text-gray-800">505</h1>
-        <p className="text-2xl font-medium text-gray-600 mb-8">
+        <p className="mb-8 text-2xl font-medium text-gray-600">
           Ошибка сервера. Что-то пошло не так.
           <br />
           Отправьте пожалуйста текст ошибки почту{" "}
@@ -31,7 +32,7 @@ function NotFoundPage() {
           <textarea
             readOnly
             value={error.stack as any}
-            className="w-full h-40 p-4 text-sm text-gray-700 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+            className="h-40 w-full rounded-lg border-2 border-gray-300 p-4 text-sm text-gray-700 focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500"
             placeholder="Текст ошибки..."
           />
         </div>

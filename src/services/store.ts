@@ -1,6 +1,7 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { createApi } from "@reduxjs/toolkit/query/react";
+
 import { api } from "./api.tsx";
 
 export const applicationsApi = createApi({
@@ -47,6 +48,36 @@ export const {
   useCreateApplicationMutation,
 } = applicationsApi;
 
+export const pageApi = createApi({
+  reducerPath: "pages",
+  baseQuery: api,
+  keepUnusedDataFor: 0,
+  endpoints: (builder) => ({
+    getPage: builder.query({
+      queryFn: async ({ id }) => {
+        try {
+          const page = await api.get(`pages/${id}`);
+          return { data: page };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
+    updatePage: builder.mutation({
+      queryFn: async ({ id, data }) => {
+        try {
+          const page = await api.put(`pages/${id}/`, data);
+          return { data: page };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
+  }),
+});
+
+export const { useGetPageQuery, useUpdatePageMutation } = pageApi;
+
 export const userApi = createApi({
   reducerPath: "user",
   baseQuery: api,
@@ -80,11 +111,13 @@ export const store = configureStore({
   reducer: {
     [applicationsApi.reducerPath]: applicationsApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [pageApi.reducerPath]: pageApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(applicationsApi.middleware)
-      .concat(userApi.middleware),
+      .concat(userApi.middleware)
+      .concat(pageApi.middleware),
 });
 
 setupListeners(store.dispatch);
