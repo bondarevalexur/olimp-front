@@ -3,36 +3,39 @@ import { useState } from "react";
 import Button from "components/Button";
 import Spinner from "components/Spinner";
 
-import { useRegisterUserMutation } from "services/storeApi";
+import { useResetUserPasswordMutation } from "services/storeApi";
 
-function SignUp() {
-  const [email, setEmail] = useState("");
+function ChangePassword() {
   const [password, setPassword] = useState("");
-  const [secondPassword, setSecondPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [secondNewPassword, setSecondNewPassword] = useState("");
   const [validation, setValidation] = useState("");
 
-  const [registerUser, { isLoading, isSuccess, isError, data, error }] = useRegisterUserMutation();
+  const [resetUserPassword, { isLoading, isSuccess, isError, error }] =
+    useResetUserPasswordMutation({});
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!secondPassword || !password || !email) {
+    // Простая валидация
+    if (!password || !newPassword || !secondNewPassword) {
       setValidation("Заполните все поля");
       return;
     }
-
-    if (secondPassword !== password) {
+    if (newPassword !== secondNewPassword) {
       setValidation("Пароли не совпадают");
+      return;
+    }
+
+    if (newPassword === password) {
+      setValidation("Новый пароль совпадает с текущим");
       return;
     }
 
     // Очистка ошибки
     setValidation("");
 
-    registerUser({
-      email,
-      password,
-    });
+    resetUserPassword({ new_password: newPassword, last_password: password });
   };
 
   if (isLoading)
@@ -46,12 +49,12 @@ function SignUp() {
     return (
       <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-          <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Вход в систему</h2>
+          <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Смена пароля</h2>
 
-          <p className="mb-4 text-center text-green-800">{data?.message}</p>
+          <p className="mb-4 text-center text-green-800">Вы успешно сменили пароль</p>
 
-          <Button to="/profile-activate" className="w-full">
-            Ввести код из почты
+          <Button to="/" className="w-full">
+            Главная
           </Button>
         </div>
       </div>
@@ -60,34 +63,15 @@ function SignUp() {
   return (
     <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-        <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Вход в систему</h2>
+        <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Смена пароля</h2>
 
         {validation && <p className="mb-4 text-center text-red-500">{validation}</p>}
-        {isError && (
-          <p className="mb-4 text-center text-red-500">
-            Пользователь с таким email уже зарегистрирован
-          </p>
-        )}
+        {isError && <p className="mb-4 text-center text-red-500">Неверный пароль</p>}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              data-error={Boolean(error || isError)}
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500 data-[error=true]:border-red-700 data-[error=true]:ring-red-500"
-              placeholder="Введите email"
-            />
-          </div>
-
-          <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Пароль
+              Текущий пароль
             </label>
             <input
               data-error={Boolean(error || isError)}
@@ -102,14 +86,28 @@ function SignUp() {
 
           <div>
             <label htmlFor="second_password" className="block text-sm font-medium text-gray-700">
+              Новый пароль
+            </label>
+            <input
+              data-error={Boolean(error || isError)}
+              type="password"
+              id="second_password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="mt-1 w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500 data-[error=true]:border-red-700 data-[error=true]:ring-red-500"
+              placeholder="Введите пароль повторно"
+            />
+          </div>
+          <div>
+            <label htmlFor="second_password" className="block text-sm font-medium text-gray-700">
               Подтвердите пароль
             </label>
             <input
               data-error={Boolean(error || isError)}
               type="password"
               id="second_password"
-              value={secondPassword}
-              onChange={(e) => setSecondPassword(e.target.value)}
+              value={secondNewPassword}
+              onChange={(e) => setSecondNewPassword(e.target.value)}
               className="mt-1 w-full rounded-lg border-2 border-gray-300 p-3 shadow-sm focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500 data-[error=true]:border-red-700 data-[error=true]:ring-red-500"
               placeholder="Введите пароль повторно"
             />
@@ -117,12 +115,7 @@ function SignUp() {
 
           <div>
             <Button type="submit" className="mb-4 w-full">
-              Регистрация
-            </Button>
-
-            <p className="mb-0">Уже зарегистрированны?</p>
-            <Button to="/sign-in" className="w-full">
-              Войти
+              Сменить пароль
             </Button>
           </div>
         </form>
@@ -131,4 +124,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default ChangePassword;

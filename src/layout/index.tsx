@@ -7,7 +7,7 @@ import { ROUTS_PATH } from "../menu.tsx";
 import logo from "assets/logo-zayaz.jpg";
 import Button from "components/Button";
 
-import { useGetUserQuery, userApi } from "../services/store.ts";
+import { useGetUserQuery, userApi } from "services/storeApi";
 
 function Layout() {
   const user = useLoaderData() as any;
@@ -29,7 +29,7 @@ function Layout() {
         <div className="container m-auto mb-5 flex items-center justify-between gap-4">
           <div className="flex items-center">
             <img src={logo} alt="M" width="160" height="160" className="rounded-full" />
-            <h1 className="m-0 ml-10">
+            <h1 className="m-0 ml-10 lg:text-xl">
               Турнир юных математиков <br />
               им. академика Н.Г. Басова <br /> (Воронежская обл.)
             </h1>
@@ -54,12 +54,12 @@ function Layout() {
             {Object.values(ROUTS_PATH)
               .filter((rout: any) => !rout?.isAdmin || currentUser?.data?.isAdmin)
               .map(({ path, title, submenu }: any, index) => (
-                <li className="relative cursor-pointer list-none p-0">
+                <li key={`${index}_${path}`} className="relative cursor-pointer list-none p-0">
                   {submenu ? (
-                    <Dropdown title={title} key={`${index}_${path}`} submenu={submenu} />
+                    <Dropdown title={title} submenu={submenu} />
                   ) : (
                     <Link
-                      className="peer relative z-10 m-0 block rounded px-2 text-inherit no-underline hover:border-x-orange-400 hover:bg-white hover:text-orange-400 hover:shadow"
+                      className="peer relative z-10 m-0 block rounded px-4 text-xl font-semibold text-inherit no-underline hover:border-x-orange-400 hover:bg-white hover:text-orange-400 hover:shadow"
                       to={path}
                     >
                       {title}

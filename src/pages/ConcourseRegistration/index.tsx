@@ -7,20 +7,20 @@ import {
   useCreateApplicationMutation,
   useGetApplicationsQuery,
   useUpdateApplicationMutation,
-} from "../../services/store.ts";
+} from "services/storeApi";
 
 function ConcourseRegistration() {
   const [formData, setFormData] = useState({
-    school_name: null,
-    teacher_name: null,
-    teacher_email: null,
-    class_3_section_1: null,
-    class_3_section_2: null,
-    class_3_section_3: null,
-    class_4_section_1: null,
-    class_4_section_2: null,
-    class_4_section_3: null,
-    class_4_section_4: null,
+    school_name: "",
+    teacher_name: "",
+    teacher_email: "",
+    class_3_section_1: "",
+    class_3_section_2: "",
+    class_3_section_3: "",
+    class_4_section_1: "",
+    class_4_section_2: "",
+    class_4_section_3: "",
+    class_4_section_4: "",
   } as any);
 
   const handleChange = (e: any) => {
@@ -32,16 +32,16 @@ function ConcourseRegistration() {
   const { data } = useGetApplicationsQuery({});
 
   useEffect(() => {
-    if (data?.data?.id) {
-      setFormData(data?.data);
+    if (data?.id) {
+      setFormData(data);
     }
-  }, [data?.data]);
+  }, [data]);
 
   const handleSubmit = useCallback(
     (e: any) => {
       e.preventDefault();
 
-      if (data?.data?.id) {
+      if (data?.id) {
         updateApplication(formData)
           .then(() => {
             toast.success("Заявка обновлена");
@@ -59,7 +59,7 @@ function ConcourseRegistration() {
           });
       }
     },
-    [formData, data?.data],
+    [formData, data],
   );
 
   return (

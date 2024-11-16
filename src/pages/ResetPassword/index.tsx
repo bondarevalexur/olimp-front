@@ -1,46 +1,61 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Button from "components/Button";
+import Spinner from "components/Spinner";
 
-import { api } from "services/api.tsx";
+import { useResetUserPasswordMutation } from "services/storeApi";
 
 function ResetPassword() {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [validation, setValidation] = useState("");
 
-  const navigate = useNavigate();
+  const [resetUserPassword, { isLoading, isSuccess, isError, data, error }] =
+    useResetUserPasswordMutation({});
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // Простая валидация
     if (!email) {
-      setError("Заполните почту");
+      setValidation("Заполните все поля");
       return;
     }
 
     // Очистка ошибки
-    setError("");
+    setValidation("");
 
-    try {
-      const response = await api.post("/token/", {
-        email,
-      });
-      localStorage.setItem("access_token", response.data.access);
-      localStorage.setItem("refresh_token", response.data.refresh);
-      navigate("/");
-    } catch (err) {
-      setError("Неверный логин или пароль");
-    }
+    resetUserPassword({ email });
   };
+
+  if (isLoading)
+    return (
+      <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
+        <Spinner />
+      </div>
+    );
+
+  if (isSuccess)
+    return (
+      <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
+        <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+          <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Сброс пароля</h2>
+
+          <p className="mb-4 text-center text-green-800">{data?.message}</p>
+
+          <Button to="/profile-activate" className="w-full">
+            Ввести код из почты
+          </Button>
+        </div>
+      </div>
+    );
 
   return (
     <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
         <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Сброс пароля</h2>
 
-        {error && <p className="mb-4 text-center text-red-500">{error}</p>}
+        {isError && <p className="mb-4 text-center text-red-500">{(error as any)?.data?.error}</p>}
+        {validation && <p className="mb-4 text-center text-red-500">{validation}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

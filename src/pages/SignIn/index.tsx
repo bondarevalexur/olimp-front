@@ -2,47 +2,50 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import Button from "components/Button";
+import Spinner from "components/Spinner";
 
-import { api } from "services/api.tsx";
+import { useSignInUserMutation } from "services/storeApi";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [validation, setValidation] = useState("");
 
   const navigate = useNavigate();
+
+  const [signInUser, { isLoading, isError }] = useSignInUserMutation({});
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // Простая валидация
     if (!email || !password) {
-      setError("Заполните все поля");
+      setValidation("Заполните все поля");
       return;
     }
 
     // Очистка ошибки
-    setError("");
+    setValidation("");
 
-    try {
-      const response = await api.post("/token/", {
-        email,
-        password,
-      });
-      localStorage.setItem("access_token", response.data.access);
-      localStorage.setItem("refresh_token", response.data.refresh);
-      navigate("/");
-    } catch (err) {
-      setError("Неверный логин или пароль");
-    }
+    signInUser({ email, password }).then((result) => {
+      if (!result.error) navigate("/");
+    });
   };
+
+  if (isLoading)
+    return (
+      <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
         <h2 className="mb-6 mt-0 text-center text-2xl font-bold text-gray-700">Вход в систему</h2>
 
-        {error && <p className="mb-4 text-center text-red-500">{error}</p>}
+        {isError && <p className="mb-4 text-center text-red-500">Неверный логин или пароль</p>}
+        {validation && <p className="mb-4 text-center text-red-500">{validation}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

@@ -1,42 +1,22 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 import Button from "components/Button";
 
-import { api } from "services/api.tsx";
+import { useActivateUserMutation } from "services/storeApi";
 
 const AccountActivation = () => {
   const token = location.search?.replace("?", "");
 
   const [activationCode, setActivationCode] = useState("");
-  const [status, setStatus] = useState("loading"); // loading, success, error
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const activateAccount = useCallback(
-    async (token: string) => {
-      try {
-        const response = await api.get(`users/activate?activation_code=${token}`);
-
-        const data = await response;
-
-        if (data.status === 200) {
-          setStatus("success");
-        } else {
-          throw new Error(data?.data?.message);
-        }
-      } catch (error: any) {
-        setStatus("error");
-        setErrorMessage(error?.response?.data?.error ?? error.message);
-      }
-    },
-    [setStatus, setErrorMessage],
-  );
+  const [activateUser, { isLoading, isSuccess, isError, data }] = useActivateUserMutation({});
 
   useEffect(() => {
-    token && activateAccount(token);
-  }, [token, activateAccount]);
+    token && activateUser(token);
+  }, [token]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
+    <div className="flex min-h-[calc(100vh-391px)] items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 text-center shadow-md">
         {!token && (
           <>
@@ -45,7 +25,7 @@ const AccountActivation = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                activateAccount(activationCode);
+                activateUser(activationCode);
               }}
               className="space-y-4"
             >
@@ -64,8 +44,8 @@ const AccountActivation = () => {
           </>
         )}
 
-        {status === "loading" && <p className="text-gray-700">Активируем ваш аккаунт...</p>}
-        {status === "success" && (
+        {isLoading && <p className="text-gray-700">Активируем ваш аккаунт...</p>}
+        {isSuccess && (
           <>
             <h2 className="mb-4 text-2xl font-bold text-orange-400">Аккаунт активирован!</h2>
             <p className="mb-6 text-gray-700">
@@ -76,10 +56,10 @@ const AccountActivation = () => {
             </Button>
           </>
         )}
-        {status === "error" && (
+        {isError && (
           <>
             <h2 className="mb-4 text-2xl font-bold text-red-600">Ошибка активации</h2>
-            <p className="mb-6 text-gray-700">{errorMessage}</p>
+            <p className="mb-6 text-gray-700">{data?.message}</p>
           </>
         )}
       </div>

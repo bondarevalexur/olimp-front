@@ -1,4 +1,4 @@
-import { useGetApplicationsQuery, useGetUserQuery } from "../../services/store.ts";
+import { useGetApplicationsQuery, useGetUserQuery } from "services/storeApi";
 
 const columns = [
   ["N", "Номер"],
@@ -21,7 +21,7 @@ function ConcourseRegistrationList() {
 
   const { data: currentUser } = useGetUserQuery({});
 
-  const applications = data?.data ?? [];
+  const applications = data ?? [];
 
   if (currentUser?.data?.isAdmin)
     return (

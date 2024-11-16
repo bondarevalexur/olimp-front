@@ -1,5 +1,6 @@
 import Layout from "./layout";
 import AccountActivation from "./pages/AccountActivation";
+import ChangePassword from "./pages/ChangePassword";
 import ConcourseRegistration from "./pages/ConcourseRegistration/index.jsx";
 import ConcourseRegistrationList from "./pages/ConcourseRegistrationList/index.jsx";
 import MainPage from "./pages/Main";
@@ -81,6 +82,7 @@ export const ROUTS = [
       { path: "sign-up", element: <SignUp /> },
       { path: "profile-activate", element: <AccountActivation /> },
       { path: "reset-password", element: <ResetPassword /> },
+      { path: "change-password", element: <ChangePassword /> },
     ],
   },
 ];

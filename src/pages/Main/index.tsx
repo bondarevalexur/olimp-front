@@ -7,7 +7,7 @@ import Button from "components/Button";
 import FileUploadInput from "components/FileUploadInput";
 import FileView from "components/FileView";
 
-import { useGetPageQuery, useUpdatePageMutation } from "../../services/store.ts";
+import { useGetPageQuery, useUpdatePageMutation } from "services/storeApi";
 
 import { api } from "services/api.tsx";
 
@@ -19,6 +19,7 @@ function Files({ getPage, remoteId }: any) {
     formData.append("name", selectedFile?.name);
 
     try {
+      // TODO
       const response = await api.post(`/files/`, formData, {});
 
       if (response.status !== 201) {
@@ -26,7 +27,7 @@ function Files({ getPage, remoteId }: any) {
       }
 
       const body = { files: [{ id: response?.data?.id }] };
-
+      // TODO
       api.patch(`/pages/${remoteId}/`, body);
 
       getPage();
@@ -51,15 +52,15 @@ function Main({ remoteId }: any) {
   const [updatePage] = useUpdatePageMutation();
 
   useEffect(() => {
-    setEditorData(data?.data?.content ?? "");
-  }, [data?.data]);
+    setEditorData(data?.content ?? "");
+  }, [data]);
 
   function handleSubmit() {
     const body = {
       content: editorData,
     };
 
-    updatePage({ id: remoteId, data: body });
+    updatePage({ id: remoteId, body });
     navigate(location.pathname);
   }
 
@@ -75,7 +76,7 @@ function Main({ remoteId }: any) {
 
           <h3>Файлы</h3>
 
-          {data?.data?.files?.map((file: any) => (
+          {data?.files?.map((file: any) => (
             <FileView file={file} key={file.id} getPage={() => {}} />
           ))}
 
